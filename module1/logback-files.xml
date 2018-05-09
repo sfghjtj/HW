@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 定义log 文件的 home 目录  -->
+    <property name="LOG_HOME" value="/tmp/pord/logs/tomcat/"/>
+
+    <property name="LOG_JSON_PATTERN" value='{"time":"%date{yyyy-MM-dd HH:mm:ss}", "thread":"%thread", "level":"%-5level", "logger":"%logger", "message":"%mdc{client} %msg"}%n' />
+
+    <!--<include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_JSON_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>NEUTRAL</onMismatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--<appender name="TRACE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/sociality.trace.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<FileNamePattern>${LOG_HOME}/backup/sociality.trace.%i.log.zip</FileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>10</maxIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${LOG_JSON_PATTERN}</pattern>-->
+            <!--<charset>utf8</charset>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>TRACE</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--<appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/sociality.info.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<FileNamePattern>${LOG_HOME}/backup/sociality.info.%i.log.zip</FileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>10</maxIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${LOG_JSON_PATTERN}</pattern>-->
+            <!--<charset>utf8</charset>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>INFO</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--<appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/sociality.debug.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<FileNamePattern>${LOG_HOME}/backup/sociality.debug.%i.log.zip</FileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>10</maxIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${LOG_JSON_PATTERN}</pattern>-->
+            <!--<charset>utf8</charset>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>DEBUG</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--<appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/sociality.warn.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<FileNamePattern>${LOG_HOME}/backup/sociality.warn.%i.log.zip</FileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>10</maxIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${LOG_JSON_PATTERN}</pattern>-->
+            <!--<charset>utf8</charset>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>WARN</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/sociality.error.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<FileNamePattern>${LOG_HOME}/backup/sociality.error.%i.log.zip</FileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>10</maxIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${LOG_JSON_PATTERN}</pattern>-->
+            <!--<charset>utf8</charset>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>ERROR</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--<appender name="SQL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/sociality.sql.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<FileNamePattern>${LOG_HOME}/backup/sociality.sql.%i.log.zip</FileNamePattern>-->
+            <!--<minIndex>1</minIndex>-->
+            <!--<maxIndex>10</maxIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>${LOG_JSON_PATTERN}</pattern>-->
+            <!--<charset>utf8</charset>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>ERROR</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+        <!--<appender-ref ref="TRACE_FILE" />-->
+        <!--<appender-ref ref="INFO_FILE" />-->
+        <!--<appender-ref ref="DEBUG_FILE" />-->
+        <!--<appender-ref ref="WARN_FILE" />-->
+        <!--<appender-ref ref="ERROR_FILE" />-->
+    </root>
+
+    <!--<logger name="ryplat-sql-log" addtivity="false" level="TRACE">-->
+        <!--<appender-ref ref="SQL_FILE"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="org.apache.commons.beanutils.BeanUtils" addtivity="false" level="INFO">-->
+        <!--<appender-ref ref="CONSOLE"/>-->
+    <!--</logger>-->
+
+</configuration>

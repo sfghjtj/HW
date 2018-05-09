@@ -7,9 +7,13 @@ import akka.pattern.Patterns
 import akka.testkit.TestActorRef
 import akka.util.Timeout
 import com.zhw1.akka_test.ActorSys.system
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import scala.compat.java8.FutureConverters.toJava
 import scala.concurrent.Await
 import scala.concurrent.Await.result
@@ -28,6 +32,8 @@ import java.util.concurrent.TimeUnit
 class AkkademyDbTest{
 
     var actorRef:TestActorRef<AkkadeMyDb>?  =null
+    val log: Log = LogFactory.getLog("jcl_test_class")
+    val logger: Logger = LoggerFactory.getLogger("slf4j_test_class")
 
     @Before
     fun initActor() {
@@ -85,17 +91,26 @@ class AkkademyDbTest{
 //            }
 //        }
         //askPong("pping").exceptionally { "default" }.thenAccept(::println)
-        askPong("pping").handle { t, u ->
-            if (u == null) {
-                CompletableFuture.completedFuture(t)
-            }else{
-                askPong("ping")
-            }
-        }.thenCompose {
-            it.thenAccept(::println)
-            it
-        }
+//        askPong("pping").handle { t, u ->
+//            if (u == null) {
+//                CompletableFuture.completedFuture(t)
+//            }else{
+//                askPong("ping")
+//            }
+//        }.thenCompose {
+//            it.thenAccept(::println)
+//            it
+//        }
+        askPong("ping").thenCombine(askPong("ping"),{a,b->
+            println(a+b)
+        })
         println("over!!")
+    }
+
+    @Test
+    fun testLog() {
+       log.warn("jcl log info test!")
+       logger.info("slf4j log info test!")
     }
 
 
