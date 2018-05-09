@@ -12,6 +12,7 @@ import org.junit.Ignore
 import org.junit.Test
 import scala.compat.java8.FutureConverters.toJava
 import scala.concurrent.Await
+import scala.concurrent.Await.result
 import scala.concurrent.Future
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
@@ -22,9 +23,7 @@ import java.util.concurrent.TimeUnit
  * Created by sfghjtj on 2018/5/4.
  */
 
-object ActorSys{
-    val system: ActorSystem = ActorSystem.create()
-}
+
 
 class AkkademyDbTest{
 
@@ -49,7 +48,7 @@ class AkkademyDbTest{
     fun testPongActor() {
         val actorRef = system.actorOf(Props.create(PongActor::class.java))
         val future = Patterns.ask(actorRef, "ping", 5)
-        val a =Await.result(future, Timeout(5, TimeUnit.SECONDS).duration()) //等同于java8的CompletableFuture.get()的阻塞。
+        val a = result(future, Timeout(5, TimeUnit.SECONDS).duration()) //等同于java8的CompletableFuture.get()的阻塞。
         println(a)
     }
 
@@ -72,5 +71,32 @@ class AkkademyDbTest{
         }
        println("over!!!!!")
     }
+
+    @Test
+    fun ptc() {
+        //askPong("pingh").thenAccept(::println)//onSuccess时处理
+        //askPong("ping").thenApply { it.toCharArray().first() }.thenAccept(::println)
+        //askPong("ping").thenCompose { askPong("ping") }.thenAccept(::println)
+//        askPong("pping").handle { t, u ->
+//            if (u != null) {
+//                println(u)
+//            }else{
+//                println(t)
+//            }
+//        }
+        //askPong("pping").exceptionally { "default" }.thenAccept(::println)
+        askPong("pping").handle { t, u ->
+            if (u == null) {
+                CompletableFuture.completedFuture(t)
+            }else{
+                askPong("ping")
+            }
+        }.thenCompose {
+            it.thenAccept(::println)
+            it
+        }
+        println("over!!")
+    }
+
 
 }

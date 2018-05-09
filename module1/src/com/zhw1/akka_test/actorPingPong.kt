@@ -13,7 +13,7 @@ import akka.japi.pf.ReceiveBuilder
 class PongActor: AbstractActor(){
     override fun createReceive(): Receive {
         return ReceiveBuilder().matchEquals("ping", FI.UnitApply {
-            Thread.sleep(5000)
+            //Thread.sleep(5000)
             sender().tell("pong", ActorRef.noSender())
         }).matchAny {
             sender().tell(Status.Failure(RuntimeException("unknown message!!")), self())

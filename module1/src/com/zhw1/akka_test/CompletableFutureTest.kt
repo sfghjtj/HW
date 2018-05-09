@@ -7,6 +7,18 @@ import java.util.concurrent.*
 /**
  * Created by sfghjtj on 2018/5/4.
  */
+
+class CFT1 {
+    @Test
+    fun t1() {
+        val a =CompletableFuture.supplyAsync { "hello world!" }
+        val b =CompletableFuture.runAsync { println("hello world") }
+        println(a.get())
+    }
+}
+
+
+
 class T2{
 
     @Test
