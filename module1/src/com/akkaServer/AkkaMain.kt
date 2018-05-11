@@ -2,6 +2,7 @@ package com.akkaServer
 
 import akka.actor.ActorSystem
 import akka.actor.Props
+import akka.pattern.Patterns
 import com.typesafe.config.ConfigFactory
 
 /**
@@ -17,7 +18,7 @@ fun main(args: Array<String>) {
       remote {
         netty.tcp {
           hostname = "127.0.0.1"
-          port = "2555"
+          port = "26222"
         }
       }
     }
@@ -25,4 +26,5 @@ fun main(args: Array<String>) {
     //一个actor作为一个服务对外提供工作！
     val actorRef= system.actorOf(Props.create(AkkademyDb::class.java), "akkademy-db")
     println(actorRef.path())
+    //Patterns.ask(actorRef,SetRequest("name","zhw"),2000)
 }
