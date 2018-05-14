@@ -18,15 +18,16 @@ class AkkademyDb : AbstractActor() {
 
 
     override fun createReceive(): Receive {
+        val actorSender: ActorRef = this.sender()
         return ReceiveBuilder().match(SetRequest::class.java, FI.UnitApply {
             log.info("Received Set Request:{}",it)
             map.put(it.key,it.value)
-            sender().tell(Status.Success(it.key), this.self())
+            actorSender.tell(Status.Success(it.key), this.self())
         }).match(GetRequest::class.java, FI.UnitApply {
             log.info("Received Get Request:{}",it)
-            sender().tell(map[it.key] ?: KeyNotFoundException(it.key), self())
+            actorSender.tell(map[it.key] ?: KeyNotFoundException(it.key), self())
         }).matchAny {
-            sender().tell(Status.Failure(ClassNotFoundException()),self())
+            actorSender.tell(Status.Failure(ClassNotFoundException()),self())
         }.build()
     }
 }

@@ -2,8 +2,11 @@ package com.akkaServer
 
 import akka.actor.ActorSystem
 import akka.actor.Props
+import akka.actor.TypedActor.context
 import akka.pattern.Patterns
 import com.typesafe.config.ConfigFactory
+import scala.compat.java8.FutureConverters.toJava
+import java.util.concurrent.CompletableFuture
 
 /**
  * Created by sfghjtj on 2018/5/10.
@@ -26,5 +29,9 @@ fun main(args: Array<String>) {
     //一个actor作为一个服务对外提供工作！
     val actorRef= system.actorOf(Props.create(AkkademyDb::class.java), "akkademy-db")
     println(actorRef.path())
-    //Patterns.ask(actorRef,SetRequest("name","zhw"),2000)
+    val a = toJava(Patterns.ask(actorRef, SetRequest("name", "zhw"), 2000)) as CompletableFuture
+
+
+
+
 }
