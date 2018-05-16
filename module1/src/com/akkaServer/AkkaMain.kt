@@ -27,10 +27,12 @@ fun main(args: Array<String>) {
       }
     }
 """))
-    
+
     //一个actor作为一个服务对外提供工作！
     val actorRef= system.actorOf(Props.create(AkkademyDb::class.java), "akkademy-db")
     println(actorRef.path())
     val a = toJava(Patterns.ask(actorRef, SetRequest("name", "zhw"), 2000)) as CompletableFuture
 
 }
+
+
