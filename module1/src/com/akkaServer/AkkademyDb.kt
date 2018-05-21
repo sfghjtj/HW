@@ -25,6 +25,7 @@ class AkkademyDb : AbstractActor() {
             map.put(it.key,it.value)
             actorSender.tell(Status.Success(it.key), this.self())
         }).match(GetRequest::class.java, FI.UnitApply {
+            Thread.sleep(70)
             log.info("Received Get Request:{}",it)
             actorSender.tell(map[it.key] ?: KeyNotFoundException(it.key), self())
         }).matchAny {

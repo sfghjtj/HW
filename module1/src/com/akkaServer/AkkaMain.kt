@@ -3,11 +3,13 @@ package com.akkaServer
 import akka.actor.ActorSystem
 import akka.actor.Props
 import akka.actor.TypedActor.context
+import akka.pattern.CircuitBreaker
 import akka.pattern.Patterns
 import com.typesafe.config.ConfigFactory
 import scala.compat.java8.FutureConverters.toJava
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ThreadPoolExecutor
+import scala.concurrent.Future
+import scala.concurrent.duration.FiniteDuration
+import java.util.concurrent.*
 
 /**
  * Created by sfghjtj on 2018/5/10.
@@ -30,10 +32,27 @@ fun main(args: Array<String>) {
 
     //一个actor作为一个服务对外提供工作！
     val actorRef= system.actorOf(Props.create(AkkademyDb::class.java), "akkademy-db")
-    println(actorRef.path())
+    //println(actorRef.path())
     val a = toJava(Patterns.ask(actorRef, SetRequest("name", "zhw"), 2000)) as CompletableFuture
+    //模拟一个熔断器
+    val breaker = CircuitBreaker(system.scheduler(), 10, FiniteDuration(1, TimeUnit.SECONDS),
+            FiniteDuration(1, TimeUnit.SECONDS), system.dispatcher()).onOpen(Runnable { println("opened!!!!!")}).onClose(Runnable { println("closed!!!!") }).onHalfOpen(Runnable { println("half-open!!!!") })
+    for(i in 0..10000000){
+        breaker.callWithCircuitBreakerCS({
+            toJava(Patterns.ask(actorRef,GetRequest("name"),2000L)).handle { t, u ->
+                if ( t!= null) {
+                    println("got it: $t")
+                }else{
+                    println("error: $u")
+                }
 
+            }
+        })
+        Thread.sleep(50L)
+    }
 }
+
+
 
 
 
